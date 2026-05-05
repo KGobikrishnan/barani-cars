@@ -1,0 +1,123 @@
+/* ============================================
+   CTA Section
+   ============================================ */
+.cta {
+  background: var(--color-black);
+  padding: var(--space-4xl) 0;
+}
+
+.cta__card {
+  position: relative;
+  background: linear-gradient(135deg, var(--color-black-card) 0%, #1a1a1a 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 400px;
+  box-shadow: var(--shadow-lg), 0 0 50px rgba(57, 255, 20, 0.05);
+}
+
+.cta__content {
+  flex: 1;
+  padding: var(--space-3xl);
+  position: relative;
+  z-index: 2;
+}
+
+.cta__title {
+  font-size: var(--fs-h1);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: var(--space-md);
+}
+
+.cta__text {
+  font-size: var(--fs-body);
+  color: var(--color-white-muted);
+  margin-bottom: var(--space-2xl);
+  max-width: 500px;
+}
+
+.cta__buttons {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.cta__image-container {
+  flex: 1;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  display: block;
+}
+
+.cta__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left center;
+  opacity: 0.6;
+  filter: grayscale(20%) brightness(80%);
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.cta__card:hover .cta__image {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+.cta__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--color-black-card) 10%, transparent 100%);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cta__card {
+    flex-direction: column;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .cta__content {
+    padding: var(--space-2xl);
+    order: 1;
+  }
+
+  .cta__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta__buttons {
+    justify-content: center;
+  }
+
+  .cta__image-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    order: 0;
+  }
+
+  .cta__image-overlay {
+    background: linear-gradient(to bottom, transparent 0%, var(--color-black-card) 90%);
+  }
+}
+
+@media (max-width: 480px) {
+  .cta__content {
+    padding: var(--space-xl);
+  }
+
+  .cta__buttons .btn {
+    width: 100%;
+  }
+}

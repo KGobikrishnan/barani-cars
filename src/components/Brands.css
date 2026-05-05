@@ -1,0 +1,107 @@
+/* ============================================
+   Brands Section
+   ============================================ */
+.brands {
+  background: var(--color-black-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.brands__header {
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Marquee */
+.brands__marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  margin-bottom: var(--space-3xl);
+}
+
+.brands__track {
+  display: flex;
+  gap: var(--space-md);
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.brand-item {
+  padding: var(--space-md) var(--space-xl);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.brand-item:hover {
+  transform: translateY(-2px);
+}
+
+.brand-item__name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  color: var(--color-white-muted);
+  transition: color var(--duration-fast);
+}
+
+.brand-item:hover .brand-item__name {
+  color: var(--color-green);
+}
+
+/* Grid */
+.brands__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-sm);
+}
+
+.brands__grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-md);
+  background: rgba(20, 20, 20, 0.5);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: var(--color-white-muted);
+  transition: all var(--duration-fast);
+  text-align: center;
+}
+
+.brands__grid-item:hover {
+  color: var(--color-green);
+  border-color: rgba(57, 255, 20, 0.2);
+  background: var(--color-green-subtle);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .brands__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .brands__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
+  }
+
+  .brands__grid-item {
+    padding: var(--space-md) var(--space-sm);
+    font-size: 0.7rem;
+  }
+}

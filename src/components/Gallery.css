@@ -1,0 +1,183 @@
+/* ============================================
+   Gallery Collage Section
+   ============================================ */
+.gallery {
+  position: relative;
+  background: var(--color-black);
+  padding: var(--space-4xl) 0;
+  overflow: hidden;
+}
+
+/* Background Date Styling */
+.gallery__background-text {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  font-size: clamp(5rem, 15vw, 15rem);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.03);
+  line-height: 0.8;
+  pointer-events: none;
+  z-index: 0;
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery__background-text span {
+  font-size: 0.3em;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  margin-top: -10px;
+}
+
+.gallery__header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: var(--space-3xl);
+}
+
+/* Collage Grid */
+.gallery__collage {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+  gap: var(--space-xs);
+  position: relative;
+  z-index: 2;
+  padding: var(--space-xl) 0;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Card Styling (Polaroid Style) */
+.gallery__card {
+  padding: 8px;
+  background: #ffffff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  position: relative;
+  transform-origin: center center;
+}
+
+.gallery__card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.gallery__media {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.gallery__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* Card Sizes - Unified for both desktop and mobile to maintain layout */
+.gallery__card--large {
+  grid-column: span 6;
+  grid-row: span 4;
+}
+
+.gallery__card--medium {
+  grid-column: span 4;
+  grid-row: span 3;
+}
+
+.gallery__card--small {
+  grid-column: span 3;
+  grid-row: span 2;
+}
+
+/* Overlays & Icons */
+.gallery__play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(30px, 8vw, 50px);
+  height: clamp(30px, 8vw, 50px);
+  background: rgba(57, 255, 20, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+  z-index: 3;
+}
+
+.gallery__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-sm);
+}
+
+.gallery__card:hover .gallery__card-overlay {
+  opacity: 1;
+}
+
+.gallery__card:hover .gallery__media img {
+  transform: scale(1.1);
+}
+
+.gallery__card-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.gallery__card-info h3 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive Scaling */
+@media (max-width: 1024px) {
+  .gallery__collage {
+    grid-auto-rows: 60px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery__collage {
+    grid-auto-rows: 45px;
+    gap: 8px;
+    padding: 0 10px;
+  }
+  
+  .gallery__card {
+    padding: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery__collage {
+    grid-auto-rows: 35px;
+    gap: 6px;
+  }
+  
+  .gallery__card {
+    padding: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  }
+}

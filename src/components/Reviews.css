@@ -1,0 +1,217 @@
+/* ============================================
+   Reviews Section
+   ============================================ */
+.reviews {
+  background: var(--color-black-light);
+  position: relative;
+}
+
+.reviews__header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Rating Summary */
+.reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+  padding: var(--space-xl) var(--space-2xl);
+  margin-bottom: var(--space-2xl);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.reviews__summary-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  min-width: 120px;
+}
+
+.reviews__summary-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--color-green);
+  line-height: 1;
+}
+
+.reviews__summary-stars {
+  display: flex;
+  gap: 2px;
+}
+
+.reviews__summary-count {
+  font-size: var(--fs-xs);
+  color: var(--color-white-muted);
+  white-space: nowrap;
+}
+
+.reviews__summary-divider {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--color-gray-500), transparent);
+}
+
+.reviews__summary-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.reviews__bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--fs-xs);
+  color: var(--color-white-muted);
+}
+
+.reviews__bar {
+  flex: 1;
+  height: 6px;
+  background: var(--color-gray-600);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.reviews__bar-fill {
+  height: 100%;
+  background: var(--color-green);
+  border-radius: var(--radius-full);
+  transition: width 1s var(--ease-out);
+}
+
+/* Review Cards */
+.reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.review-card {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  height: 100%;
+}
+
+.review-card__quote {
+  color: var(--color-green);
+  opacity: 0.2;
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+}
+
+.review-card__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.review-card__text {
+  font-size: var(--fs-small);
+  color: var(--color-gray-200);
+  line-height: 1.8;
+  flex: 1;
+}
+
+.review-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--glass-border);
+}
+
+.review-card__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-green), var(--color-green-dim));
+  color: var(--color-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.review-card__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card__name {
+  font-weight: 600;
+  font-size: var(--fs-small);
+}
+
+.review-card__car {
+  font-size: var(--fs-xs);
+  color: var(--color-white-muted);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .reviews__grid {
+    grid-template-columns: repeat(2, 1fr); /* 1x2 Grid on mobile */
+    gap: 8px;
+  }
+
+  .review-card {
+    padding: var(--space-md);
+    gap: var(--space-sm);
+  }
+
+  .review-card__text {
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .review-card__author {
+    gap: 8px;
+    padding-top: var(--space-sm);
+  }
+
+  .review-card__avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .review-card__name {
+    font-size: 0.7rem;
+  }
+
+  .review-card__car {
+    font-size: 0.6rem;
+  }
+
+  .reviews__summary {
+    flex-direction: column;
+    padding: var(--space-lg);
+    gap: var(--space-lg);
+  }
+
+  .reviews__summary-divider {
+    width: 80px;
+    height: 1px;
+  }
+}
