@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, ShieldCheck, Wrench, Users, Zap } from 'lucide-react';
 import './Hero.css';
 
 export default function Hero() {
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
+
   const scrollToProducts = () => {
     document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -13,13 +16,30 @@ export default function Hero() {
 
   return (
     <section id="hero" className="hero">
-      {/* Background Image */}
+      {/* Background Image/Video */}
       <div className="hero__bg">
+        <video 
+          src="/images/hero-video.mp4" 
+          autoPlay 
+          muted 
+          playsInline 
+          onEnded={() => setIsVideoEnded(true)}
+          className="hero__video"
+          style={{ 
+            opacity: isVideoEnded ? 0 : 1,
+            transition: 'opacity 1.5s ease-in-out'
+          }}
+        />
         <img
           src="/images/hero-car.png"
           alt="Modified car with green underglow"
           loading="eager"
           fetchPriority="high"
+          className="hero__fallback-img"
+          style={{ 
+            opacity: isVideoEnded ? 1 : 0,
+            transition: 'opacity 1.5s ease-in-out'
+          }}
         />
         <div className="hero__overlay" />
         <div className="hero__grain" />
@@ -60,8 +80,31 @@ export default function Hero() {
           </h1>
 
           <p className="hero__subtitle">
-            Performance Parts &bull; Custom Mods &bull; Professional Installation
+            A-Z Car Accessories &bull; Performance Parts &bull; Professional Installation
           </p>
+
+          {/* Trust badges - Moved up and enhanced */}
+          <motion.div
+            className="hero__trust-pill"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <div className="hero__trust-item">
+              <ShieldCheck size={18} />
+              <span>Certified Parts</span>
+            </div>
+            <div className="hero__trust-divider" />
+            <div className="hero__trust-item">
+              <Wrench size={18} />
+              <span>Expert Installation</span>
+            </div>
+            <div className="hero__trust-divider" />
+            <div className="hero__trust-item">
+              <Users size={18} />
+              <span>25,000+ Happy Customers</span>
+            </div>
+          </motion.div>
 
           <div className="hero__cta">
             <button className="btn btn-primary btn-lg" onClick={scrollToProducts}>
@@ -74,29 +117,6 @@ export default function Hero() {
               Explore Mods
             </button>
           </div>
-
-          {/* Trust badges */}
-          <motion.div
-            className="hero__trust"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
-            <div className="hero__trust-item">
-              <ShieldCheck size={16} />
-              <span>Certified Parts</span>
-            </div>
-            <div className="hero__trust-divider" />
-            <div className="hero__trust-item">
-              <Wrench size={16} />
-              <span>Expert Installation</span>
-            </div>
-            <div className="hero__trust-divider" />
-            <div className="hero__trust-item">
-              <Users size={16} />
-              <span>25,000+ Happy Customers</span>
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Stats strip */}
@@ -122,7 +142,7 @@ export default function Hero() {
           </div>
           <div className="hero__stat-sep" />
           <div className="hero__stat">
-            <span className="hero__stat-number">15+</span>
+            <span className="hero__stat-number">30+</span>
             <span className="hero__stat-label">Premium Brands</span>
           </div>
         </motion.div>

@@ -34,7 +34,7 @@ export default function Team() {
           <div className="team__image-wrapper glass-card">
             {/* Using a placeholder-style image for team since I don't have a specific team photo */}
             <div className="team__image-placeholder">
-              <img src="/images/hero-car.png" alt="Team at work" className="team__img" />
+              <img src="/images/team.jpeg" alt="Team at work" className="team__img" />
               <div className="team__overlay">
                 <p>Our dedicated team working on a premium modification project.</p>
               </div>

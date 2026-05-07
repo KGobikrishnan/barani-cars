@@ -9,6 +9,7 @@ import Brands from './components/Brands';
 import Team from './components/Team';
 import Reviews from './components/Reviews';
 import CTA from './components/CTA';
+import Map from './components/Map';
 import Footer from './components/Footer';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Team />
         <Reviews />
         <CTA />
+        <Map />
       </main>
       <Footer />
     </div>

@@ -16,13 +16,26 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
-.hero__bg img {
+.hero__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.7) contrast(1.1); /* Pro Cinematic Look */
+  transform: scale(1.02);
+}
+
+.hero__fallback-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 40%;
+  z-index: -1;
   transform: scale(1.05);
   animation: hero-zoom 20s ease-in-out infinite alternate;
 }
@@ -165,11 +178,18 @@
   font-size: 1rem;
 }
 
-/* Trust Badges */
-.hero__trust {
-  display: flex;
+/* Trust Badges Pill */
+.hero__trust-pill {
+  display: inline-flex;
   align-items: center;
   gap: var(--space-md);
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2xl);
   flex-wrap: wrap;
 }
 
@@ -177,19 +197,22 @@
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  font-size: var(--fs-small);
-  color: var(--color-white-muted);
+  font-size: 0.9rem;
+  color: var(--color-white);
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .hero__trust-item svg {
   color: var(--color-green);
+  filter: drop-shadow(0 0 5px var(--color-green-glow));
   flex-shrink: 0;
 }
 
 .hero__trust-divider {
   width: 1px;
-  height: 16px;
-  background: var(--color-gray-500);
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Stats */
@@ -267,15 +290,31 @@
   }
 
   .hero__trust-divider {
-    display: none;
+    display: block;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.2);
   }
 
-  .hero__trust {
-    gap: var(--space-sm);
+  .hero__trust-pill {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-xs);
+    padding: 10px 12px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .hero__trust-item {
-    font-size: var(--fs-xs);
+    font-size: 0.65rem;
+    white-space: nowrap;
+    gap: 4px;
+    font-weight: 800; /* Extra bold to stay visible at small size */
+  }
+
+  .hero__trust-item svg {
+    width: 14px;
+    height: 14px;
   }
 
   .hero__cta {
