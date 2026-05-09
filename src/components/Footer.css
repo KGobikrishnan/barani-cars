@@ -93,14 +93,36 @@
 .footer__contact-list {
   display: flex;
   flex-direction: column;
-  gap: var(--space-lg);
+  gap: var(--space-md);
 }
 
 .footer__contact-list li {
   display: flex;
+  align-items: flex-start;
   gap: var(--space-md);
   color: var(--color-white-muted);
   font-size: var(--fs-small);
+  transition: color var(--duration-fast);
+}
+
+.footer__branch {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer__branch strong {
+  display: block;
+  color: var(--color-green);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.footer__branch p {
+  margin: 0;
+  line-height: 1.4;
 }
 
 .footer__icon {

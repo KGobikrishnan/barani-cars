@@ -1,157 +1,208 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Play, Maximize2, Shuffle, Camera, Film } from 'lucide-react';
+import { useState, useRef, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { Volume2, VolumeX, Camera, Maximize2 } from 'lucide-react';
 import './Gallery.css';
 
-const initialItems = [
-  { id: 1, type: 'image', url: '/gallery/1.jpeg', title: 'Carbon Fiber Detailing', aspect: 'square', category: 'photo' },
-  { id: 2, type: 'image', url: '/gallery/2.jpeg', title: 'Performance Tuning', aspect: 'square', category: 'photo' },
-  { id: 3, type: 'image', url: '/gallery/3.jpeg', title: 'Interior Luxury', aspect: 'landscape', category: 'photo' },
-  { id: 4, type: 'image', url: '/gallery/4.jpeg', title: 'Matte Body Wrap', aspect: 'landscape', category: 'photo' },
-  { id: 5, type: 'image', url: '/gallery/5.jpeg', title: 'Custom Alloy Wheels', aspect: 'square', category: 'photo' },
-  { id: 6, type: 'video', url: '/gallery/6.mp4', title: 'Exhaust Sound Test', aspect: 'landscape', category: 'video' },
-  { id: 7, type: 'image', url: '/gallery/7.jpeg', title: 'LED System Install', aspect: 'square', category: 'photo' },
-  { id: 8, type: 'image', url: '/gallery/8.jpeg', title: 'Aerodynamic Kit', aspect: 'square', category: 'photo' },
-  { id: 9, type: 'video', url: '/gallery/9.mp4', title: 'Night Run Lights', aspect: 'portrait', category: 'video' },
-  { id: 10, type: 'video', url: '/gallery/10.mp4', title: 'Beast Unleashed', aspect: 'portrait', category: 'video' },
+const videoData = [
+  { id: 1, url: '/gallery/v1.mp4', insta: 'https://www.instagram.com/p/DXLKARFTacl/' },
+  { id: 2, url: '/gallery/v2.mp4', insta: 'https://www.instagram.com/p/DXQUQc4TG3z/' },
+  { id: 3, url: '/gallery/v3.mp4', insta: 'https://www.instagram.com/p/DX0S0jnpjGj/' },
+  { id: 4, url: '/gallery/v4.mp4', insta: 'https://www.instagram.com/p/DQNzNjsjFMC/' },
+  { id: 5, url: '/gallery/v5.mp4', insta: 'https://www.instagram.com/p/DVKhki7ARSJ/' },
+  { id: 6, url: '/gallery/v6.mp4', insta: 'https://www.instagram.com/p/DU9hndLAcSS/' },
+  { id: 7, url: '/gallery/v7.mp4', insta: 'https://www.instagram.com/p/DUHc3qCDKU1/' },
+  { id: 8, url: '/gallery/v8.mp4', insta: 'https://www.instagram.com/p/DTjZzPXExXf/' },
+  { id: 9, url: '/gallery/v9.mp4', insta: 'https://www.instagram.com/p/DTOzfWFiLXr/' },
+  { id: 10, url: '/gallery/v10.mp4', insta: 'https://www.instagram.com/p/DS43TkEEYBE/' },
+  { id: 11, url: '/gallery/v11.mp4', insta: 'https://www.instagram.com/p/DS2TydyEWdv/' },
+  { id: 12, url: '/gallery/v12.mp4', insta: 'https://www.instagram.com/p/DSzipWiETRX/' },
 ];
 
-export default function Gallery() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
-  const [items, setItems] = useState(initialItems);
-  const [filter, setFilter] = useState('all');
+const VideoItem = ({ video, isActive, onToggleSound, isRowPaused }) => {
+  const videoRef = useRef(null);
 
-  const shuffleGallery = () => {
-    setItems(prev => [...prev].sort(() => Math.random() - 0.5));
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isActive;
+      // If unmuted, make sure it's playing from the current position
+      if (!isActive) {
+        // When muted, we just keep it looping silently
+      }
+    }
+  }, [isActive]);
+
+  const handleEnded = () => {
+    if (isActive) {
+      onToggleSound(null); // Mute and resume
+    }
   };
 
-  // Continuous auto-shuffle
-  useEffect(() => {
-    let interval;
-    if (inView && filter === 'all') {
-      interval = setInterval(shuffleGallery, 8000); // Shuffle every 8 seconds
-    }
-    return () => clearInterval(interval);
-  }, [inView, filter]);
+  const handleDoubleClick = (e) => {
+    e.stopPropagation();
+    window.open(video.insta, '_blank');
+  };
 
-  const filteredItems = items.filter(item => 
-    filter === 'all' ? true : item.category === filter
+  return (
+    <div 
+      className={`gallery__video-card ${isActive ? 'active' : ''}`}
+      onClick={() => onToggleSound(video.id)}
+      onDoubleClick={handleDoubleClick}
+    >
+      <video
+        ref={videoRef}
+        src={video.url}
+        autoPlay
+        loop={!isActive}
+        muted={!isActive}
+        playsInline
+        preload="metadata"
+        onEnded={handleEnded}
+        className="gallery__video-element"
+      />
+      <div className="gallery__video-overlay">
+        <div className="gallery__video-info">
+          <div className={`sound-indicator ${isActive ? 'active' : ''}`}>
+            {!isActive ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            <span>{!isActive ? 'Click for Sound' : 'Sound On'}</span>
+          </div>
+          <div className="insta-hint">
+            <Camera size={14} />
+            <span>Double click for Reel</span>
+          </div>
+        </div>
+        <div className="gallery__video-corner">
+           <Maximize2 size={18} />
+        </div>
+      </div>
+      {isActive && <div className="video-playing-glow" />}
+    </div>
   );
+};
+
+const MarqueeRow = ({ videos, reverse = false, activeVideoId, onToggleSound, rowIndex, pausedRowIndex }) => {
+  const isPaused = pausedRowIndex === rowIndex;
+  
+  // Create a minimal set for seamless loop (2 clones is enough)
+  const displayVideos = useMemo(() => [...videos, ...videos], [videos]);
+  
+  const [duration, setDuration] = useState(10);
+
+  useEffect(() => {
+    const updateDuration = () => {
+      setDuration(window.innerWidth < 768 ? 6 : 10);
+    };
+    updateDuration();
+    window.addEventListener('resize', updateDuration);
+    return () => window.removeEventListener('resize', updateDuration);
+  }, []);
+
+  return (
+    <div className="gallery__marquee-container">
+      <motion.div 
+        className="gallery__marquee-track"
+        animate={isPaused ? {} : { 
+          x: reverse ? [0, "-50%"] : ["-50%", 0] 
+        }}
+        transition={{ 
+          duration: duration, 
+          repeat: Infinity, 
+          ease: "linear" 
+        }}
+      >
+        {displayVideos.map((video, idx) => (
+          <VideoItem 
+            key={`${video.id}-${idx}`} 
+            video={video} 
+            isActive={activeVideoId === video.id}
+            onToggleSound={(id) => onToggleSound(id, rowIndex)}
+            isRowPaused={isPaused}
+          />
+        ))}
+      </motion.div>
+    </div>
+  );
+};
+
+export default function Gallery() {
+  const [activeVideoId, setActiveVideoId] = useState(null);
+  const [pausedRowIndex, setPausedRowIndex] = useState(null);
+
+  // Synchronized video flow: Row 1 has 1-12, Row 2 has 1-12 but reversed or offset
+  const row1 = useMemo(() => videoData, []);
+  const row2 = useMemo(() => [...videoData].reverse(), []);
+
+  const handleToggleSound = (id, rowIndex) => {
+    if (activeVideoId === id) {
+      // Mute current and resume
+      setActiveVideoId(null);
+      setPausedRowIndex(null);
+    } else {
+      // Play new, pause its row
+      setActiveVideoId(id);
+      setPausedRowIndex(rowIndex);
+    }
+  };
+
+  // Mute on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (activeVideoId !== null) {
+        setActiveVideoId(null);
+        setPausedRowIndex(null);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [activeVideoId]);
 
   return (
     <section id="gallery" className="gallery section">
-      <div className="gallery__glow" />
+      <div className="gallery__glow-top" />
+      <div className="gallery__glow-bottom" />
       
       <div className="container container--wide">
-        <div className="gallery__top">
+        <div className="gallery__header-wrapper">
           <motion.div
             className="gallery__header"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.8 }}
           >
-            <span className="section-label">💎 Premium Portfolio</span>
-            <h2 className="section-title text-left">
-              The <span className="highlight">Beast</span> Gallery
+            <span className="section-label">🎬 Cinematic Experience</span>
+            <h2 className="section-title">
+              The <span className="highlight">Endless</span> Flow
             </h2>
-            <p className="section-subtitle text-left">
-              Explore our latest masterpieces. Shuffled dynamically to showcase the breadth of our craftsmanship.
+            <p className="section-subtitle">
+              Click a masterpiece to hear its soul. The flow stops for you. Scroll to resume the journey.
             </p>
           </motion.div>
-
-          <motion.div 
-            className="gallery__controls"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="gallery__filters">
-              <button 
-                className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-                onClick={() => setFilter('all')}
-              >
-                All
-              </button>
-              <button 
-                className={`filter-btn ${filter === 'photo' ? 'active' : ''}`}
-                onClick={() => setFilter('photo')}
-              >
-                <Camera size={14} /> Photos
-              </button>
-              <button 
-                className={`filter-btn ${filter === 'video' ? 'active' : ''}`}
-                onClick={() => setFilter('video')}
-              >
-                <Film size={14} /> Videos
-              </button>
-            </div>
-            <button className="shuffle-btn" onClick={shuffleGallery}>
-              <Shuffle size={18} />
-              <span>Shuffle</span>
-            </button>
-          </motion.div>
         </div>
+      </div>
 
-        <motion.div
-          ref={ref}
-          className="gallery__bento"
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredItems.map((item) => (
-              <motion.div
-                key={item.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ 
-                  type: 'spring', 
-                  damping: 25, 
-                  stiffness: 120,
-                  layout: { duration: 0.8, ease: "easeInOut" }
-                }}
-                className={`gallery__bento-item gallery__bento-item--${item.aspect}`}
-              >
-                <div className="gallery__item-inner">
-                  {item.type === 'video' ? (
-                    <video 
-                      src={item.url} 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline 
-                      className="gallery__video"
-                    />
-                  ) : (
-                    <img src={item.url} alt={item.title} className="gallery__img" />
-                  )}
-                  
-                  <div className="gallery__item-overlay">
-                    <div className="gallery__item-info">
-                      <span className="item-tag">{item.type}</span>
-                      <h3>{item.title}</h3>
-                    </div>
-                    <div className="gallery__item-action">
-                      <Maximize2 size={20} />
-                    </div>
-                  </div>
-
-                  {item.type === 'video' && (
-                    <div className="video-indicator">
-                      <div className="video-dot" />
-                      LIVE
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+      <div className="gallery__marquee-section">
+        {/* Row 1: Left to Right */}
+        <MarqueeRow 
+          videos={row1} 
+          reverse={true} 
+          activeVideoId={activeVideoId}
+          onToggleSound={handleToggleSound}
+          rowIndex={0}
+          pausedRowIndex={pausedRowIndex}
+        />
+        
+        {/* Row 2: Right to Left */}
+        <MarqueeRow 
+          videos={row2} 
+          reverse={false} 
+          activeVideoId={activeVideoId}
+          onToggleSound={handleToggleSound}
+          rowIndex={1}
+          pausedRowIndex={pausedRowIndex}
+        />
       </div>
     </section>
   );
 }
+

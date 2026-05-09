@@ -56,7 +56,7 @@ export default function Transformation() {
         >
           {/* After image (full width) */}
           <div className="transformation__after">
-            <img src="/images/after-car.png" alt="After modification" loading="lazy" />
+            <img src="/images/after-car.png" alt="After modification" loading="lazy" decoding="async" />
             <div className="transformation__label transformation__label--after">
               AFTER
             </div>

@@ -39,7 +39,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="footer__col">
+          <div className="footer__col footer__col--contact">
             <h4 className="footer__title">Contact Us</h4>
             <ul className="footer__contact-list">
               <li>
@@ -50,9 +50,21 @@ export default function Footer() {
                 <Mail size={18} className="footer__icon" />
                 <a href="mailto:info@baranicars.com">info@baranicars.com</a>
               </li>
-              <li>
+              <li className="footer__branch">
                 <MapPin size={18} className="footer__icon" />
-                <span>Next to The New Karnas Hotel, Chinnamanur 625515</span>
+                <div>
+                  <strong>Branch 1 (Chinnamanur)</strong>
+                  <p>Theni Bypass Road</p>
+                  <p>Chinnamanur - 625515</p>
+                </div>
+              </li>
+              <li className="footer__branch">
+                <MapPin size={18} className="footer__icon" />
+                <div>
+                  <strong>Branch 2 (Cumbum)</strong>
+                  <p>Cumbum Bypass Road</p>
+                  <p>Cumbum - 625516</p>
+                </div>
               </li>
             </ul>
           </div>
