@@ -76,7 +76,7 @@ export default function Footer() {
               © {currentYear} Barani Cars. All rights reserved.
             </p>
             <p className="footer__designer">
-              Discovered, Designed & Crafted by <span className="highlight-text">Navi Promotions</span>
+              Discovered, Designed & Crafted by <a href="https://www.navipromotions.in/" target="_blank" rel="noopener noreferrer" className="highlight-text">Navi Promotions</a>
             </p>
           </div>
           <div className="footer__bottom-links">
